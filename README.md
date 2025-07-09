@@ -22,8 +22,8 @@
 | 1️⃣ | **ALGAE**              | Autonomous Benthic Rover                                                | ROS 2 · Python              |
 | 2️⃣ | **5GCORE**             | Containerized 5G core                                           | Python · Open5GS            |
 | 3️⃣ | **CPU Pipeline**       | Five stage pipelined CPU w/ forwarding                         | Verilog · Xilinx            |
-| 4️⃣ | **SCADA Trust Model**  | Adaptive trust scoring for low-latency industrial networks     | Python                      |
-| 5️⃣ | **SOCI Data Analysis** | Linear models for caregiver stress using public health data    | R · ggplot2                 |
+| 4️⃣ | **SCADA Trust Model**  | Adaptive trust scoring for low-latency industrial networks     | Python · Xfuzzy 3.5                     |
+| 5️⃣ | **SOCI Data Analysis** | Linear models for caregiver stress using public health data    | Python · ggplot2                 |
 | 6️⃣ | **ZENIOR**             | Full‑stack project collaboration platform                       | Next.js · Supabase          |
 | 7️⃣ | **Additional Projects**| Compilers · InfoSec · IoT Systems                              | C · C++ · Risk Analysis     |
 
@@ -76,16 +76,9 @@ This project explored an under addressed attack surface between the RAN and 5G C
 </p>
 
 🔗 [More Information](./5GCORE/README.md)  
-📄 [Paper](./5GCORE/docs/5GCORE_MW.pdf)
+⭐️ [Paper](./5GCORE/docs/5GCORE_MW.pdf)
 
 </details>
-
-
-
-
-
-
-
 
 
 <details>
@@ -93,24 +86,15 @@ This project explored an under addressed attack surface between the RAN and 5G C
 
 &nbsp;
 
-Custom five-stage pipelined CPU in Verilog with a minimal 13-instruction ISA, forwarding logic, and dynamic hazard detection. Includes assembler, two hand assembled benchmarks (`min`, `vecadd`), and waveform verification. All modules were built from scratch and verified using a custom testbench and simulation for the Computer Archetecture course in Spring 2025.
-
-🔗 ⭐️ [Full Project Analysis](./CPU_Pipeline)
-
 <p align="center">
   <img src="./CPU_Pipeline/xilinx/min_overview_1.png" alt="Min benchmark waveform" width="800">
 </p>
 
+Custom five-stage pipelined CPU in Verilog with a minimal 13-instruction ISA, forwarding logic, and dynamic hazard detection. Includes assembler, two hand assembled benchmarks (`min`, `vecadd`), and waveform verification. All modules were built from scratch and verified using a custom testbench and simulation for the Computer Archetecture course in Spring 2025.
+
+🔗⭐️ [Full Project Analysis](./CPU_Pipeline)
+
 </details>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -130,60 +114,17 @@ The model achieved >90 % detection accuracy while remaining lightweight enough
 </details>
 
 
-
-
-
-
-
-
 <details>
 <summary><strong>5️⃣ SOCI Data Analysis</strong></summary>
 
 &nbsp;
 
-Placeholder
+Using the **Caregiving in the U.S. 2020** public-use dataset (N ≈ 15 000), I estimate multivariate linear, count (Poisson/negative-binomial), and logistic models to quantify how digital tool adoption, care-recipient needs, and socio demographics influence caregiver stress, weekly time burden, and perceived isolation. Survey weights and interaction terms test digital divide hypotheses for population level inference.
 
-🔗 [Full details →](./SOCI_Data_Analysis/README.md)
+⭐️ [Full details](./SOCI_Data_Analysis/README.md)
+
 
 </details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

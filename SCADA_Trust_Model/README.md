@@ -15,8 +15,8 @@
 ### Dataset
 
 [Cisco “Networks of Computing Hosts”](https://snap.stanford.edu/data/cisco-networks.html)  
-De-identified host-to-host communication graphs with ground-truth groupings (Madani et al., IWSPA 2022).  
-Chosen because its rich timestamps and role labels let me test SCADA-style anomaly detection without access to proprietary industrial traffic.
+Deidentified host2host communication graphs with ground truth groupings (Madani et al., IWSPA 2022).  
+Chosen because its rich timestamps and role labels let me test SCADA style anomaly detection without access to proprietary industrial traffic.
 
 ## Links
 
