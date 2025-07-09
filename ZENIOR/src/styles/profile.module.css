@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* Aligns the containers at the top */
+  gap: 0;
+  /* Ensure there is no gap between the containers */
+}
+
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  /* Stack! */
+  gap: 20px;
+  flex: 1;
+}
+
+.formContainer {
+  flex: 2;
+  /* This container will take 1 part of the available space */
+  margin-right: 0;
+  /* Remove right margin to align flush */
+}
+
+.progressContainer {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.rightContainer {
+  flex: 3;
+  /* This container will take 2 parts of the available space, making it bigger */
+}

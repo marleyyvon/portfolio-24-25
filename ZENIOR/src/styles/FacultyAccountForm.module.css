@@ -1,0 +1,141 @@
+/* Main container for the profile form */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 800px;
+  background-color: #fafafa;
+  /* Light background for contrast */
+}
+
+/* Instruction text styling */
+.instructionContainer {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.instructionText {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Profile picture container styling */
+.avatarContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.avatarContainer .w-32 {
+  width: 128px;
+  height: 128px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.cameraIcon {
+  position: absolute;
+  bottom: 10px;
+  right: 18em;
+  cursor: pointer;
+  color: #666;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 6px;
+  border: 1px solid #ddd;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* Input fields styling */
+.inputRow {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input,
+.select {
+  width: 100%;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Full-width input for sections like biography */
+.textarea,
+.inputFull {
+  width: 100%;
+  padding: 40px;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  resize: none;
+}
+
+/* Label styling */
+.label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  display: block;
+  color: #333;
+}
+
+.skillTag {
+  background-color: #9e1b32;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  max-width: fit-content;
+}
+
+.removeSkill {
+  margin-left: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.skillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allows skills to wrap to the next line if needed */
+  gap: 10px;
+  /* Space between skill tags */
+  margin-bottom: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profileSection {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .inputRow {
+    flex-direction: column;
+    align-items: center;
+  }
+}

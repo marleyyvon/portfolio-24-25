@@ -1,0 +1,66 @@
+.input, .select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .input:focus,
+  .select:focus {
+    border-color: #9e1b32;
+  }
+
+  .skillsContainer, .prereqsContainer, .recsContainer {
+    display: flex;
+    flex-wrap: wrap; /* Allows skills to wrap to the next line if needed */
+    gap: 10px; /* Space between skill tags */
+    margin-bottom: 15px;
+}
+
+.skillTag {
+    background-color: #9e1b32;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.removeSkill, .removePrereq, .removeRec {
+    margin-left: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+.prereqsTag, .recsTag {
+  background-color: #dfdbd3;
+  color: black;
+  padding: 8px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+  .button {
+    width: 50%;
+    padding: 10px;
+    background-color: #9e1b32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #9e1b32;
+  }
+  
+  .label {
+    margin-bottom: 5px; /* Space between the label and the input/select */
+    display: block; /* Ensures the label takes the full width */
+    text-align: left; 
+  }

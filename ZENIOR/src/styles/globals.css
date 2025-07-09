@@ -1,0 +1,76 @@
+:root {
+    /*
+    --background: hsl(var(--background));
+    --foreground: hsl(var(--foreground));
+  
+    --card: hsl(var(--card));
+    --card-foreground: hsl(var(--card-foreground));
+  
+    --popover: hsl(var(--popover));
+    --popover-foreground: hsl(var(--popover-foreground));
+  
+    --primary: hsl(var(--primary));
+    --primary-foreground: hsl(var(--primary-foreground));
+  
+    --secondary: hsl(var(--secondary));
+    --secondary-foreground: hsl(var(--secondary-foreground));
+  
+    --muted: hsl(var(--muted));
+    --muted-foreground: hsl(var(--muted-foreground));
+  
+    --accent: hsl(var(--accent));
+    --accent-foreground: hsl(var(--accent-foreground));
+  
+    --destructive: hsl(var(--destructive));
+    --destructive-foreground: hsl(var(--destructive-foreground));
+  
+    --border: hsl(var(--border));
+    --input: hsl(var(--input));
+    --ring: hsl(var(--ring));
+  
+    --chart-1: hsl(var(--chart-1));
+    --chart-2: hsl(var(--chart-2));
+    --chart-3: hsl(var(--chart-3));
+    --chart-4: hsl(var(--chart-4));
+    --chart-5: hsl(var(--chart-5));
+     */
+  
+    /* SCU Colors */
+
+    /* Primary */
+    --brandRed: #b30738;
+    --linkRed: #9e1b32;
+    --secondaryRed: #811e2d; /* PMS201 */
+  
+    /* Secondary */
+    --stone: #4e4540;
+    --marina: #033b4c;
+    --lightBeige: #f4f2f0;
+    --beige: #dfdbd3;
+    --cream: #e0e8d5;
+    --slate: #546575;
+  
+    /* UI */
+    --success: #07b31b;
+    --warning: #f28300;
+    --info: #0754b3;
+    --danger: #d9534f;
+  
+    /* Grayscale */
+    --grayscale-100: #f6f9fa;
+    --grayscale-200: #e9ecef;
+    --grayscale-300: #dee2e6;
+    --grayscale-400: #ced4da;
+    --grayscale-500: #adb5bd;
+    --grayscale-600: #868e96;
+    --grayscale-700: #495057;
+    --grayscale-800: #343a40;
+    --grayscale-900: #212529;
+  
+    /* Border Radius */
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+  }
+  

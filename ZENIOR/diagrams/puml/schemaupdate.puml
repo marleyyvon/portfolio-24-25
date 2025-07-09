@@ -1,0 +1,223 @@
+@startuml schemaupdate
+!theme vibrant
+skinparam titleFontSize 50
+skinparam ArrowFontSize 22
+skinparam ArrowFontStyle bold
+skinparam classFontSize 22
+skinparam classAttributeFontSize 20
+skinparam classHeaderFontStyle bold
+skinparam classAttributeFontStyle bold
+skinparam classBorderThickness 2
+skinparam ArrowThickness 2
+skinparam linetype ortho
+title Zenior Database Schema
+
+' The schema meets the following normal forms:
+'
+' 1NF (First Normal Form):
+' - All attributes are atomic; there are no repeating groups or arrays within the columns.
+' - Each entity has a primary key, ensuring all rows are uniquely identifiable.
+' 
+' 2NF (Second Normal Form):
+' - The schema is already in 1NF.
+' - All non-key attributes depend entirely on the primary key of the table they belong to.
+' - For example, in the `User` table, attributes like `email`, `role`, and `profilePictureUrl` depend on `User.id`.
+' - In junction tables (e.g., `StudentSkills`), all non-key attributes depend on the composite primary key.
+'
+' 3NF (Third Normal Form):
+' - The schema is already in 2NF.
+' - There are no transitive dependencies; all attributes are directly dependent on the primary key.
+' - For instance, in the `Project` table, `title`, `description`, and `status` depend only on `Project.id`.
+' - No non-key attribute depends on another non-key attribute, ensuring the database is free from anomalies.
+
+legend top left
+  <font size=36><b>Legend</b></font>
+  <b><font size=28 color=green>[E]</font> <font size=28>Entity Table</font></b>  
+  <b><font size=28 color=orangered>[E]</font> <font size=28>Enum List</font></b>
+endlegend
+
+enum Role {
+  student
+  advisor
+  admin
+  super_admin
+  --
+}
+
+enum ProjectStatus {
+  proposed
+  revise_requested
+  advisor_approved
+  final_approval
+  --
+}
+
+enum RequestStatus {
+  pending
+  approved
+  rejected
+  --
+}
+
+enum GroupRequestType {
+  join
+  invite
+  --
+}
+
+entity User {
+  * id : UUID <<PK>>
+  --
+  email : String <<Unique>>
+  role : Role <<Default(student)>>
+  isActive : Boolean 
+  profilePictureUrl : String?
+  new : Boolean 
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity Student {
+  * id : UUID <<PK>>
+  --
+  firstName : String
+  lastName : String
+  major : String
+  minor : String?
+  bio : Text?
+  createdAt : DateTime
+  updatedAt : DateTime
+  userId : UUID <<FK>>
+}
+
+entity Faculty {
+  * id : UUID <<PK>>
+  --
+  firstName : String
+  lastName : String
+  department : String
+  bio : Text?
+  researchInterests : Text?
+  expertiseAreas : Text?
+  createdAt : DateTime
+  updatedAt : DateTime
+  userId : UUID <<FK>>
+}
+
+entity InterestedIn {
+  * userId : UUID <<FK>>
+  * projectId : UUID <<FK>>
+  --
+  interestedAt : DateTime 
+}
+
+entity AdvisorRequest {
+  * id : UUID <<PK>>
+  --
+  status : RequestStatus
+  studentId : UUID <<FK>>
+  projectId : UUID <<FK>>
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity Project {
+  * id : UUID <<PK>>
+  --
+  title : String
+  description : Text
+  academicYear : String
+  department : String
+  isInterdisciplinary : Boolean 
+  status : ProjectStatus 
+  groupOpen : Boolean 
+  advisorId : UUID <<FK>>
+  coAdvisorId : UUID? <<FK>>
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity GroupRequest {
+  * id : UUID <<PK>>
+  --
+  status : RequestStatus 
+  type : GroupRequestType 
+  userId : UUID <<FK>>
+  projectId : UUID <<FK>>
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity Skill {
+  * id : UUID <<PK>>
+  --
+  name : String <<Unique>>
+}
+
+entity ProjectSkill {
+  * projectId : UUID <<FK>>
+  * skillId : UUID <<FK>>
+  --
+}
+
+entity Permission {
+  * id : UUID <<PK>>
+  --
+  name : String <<Unique>>
+  description : String
+  role : role <<FK>>
+  userId : UUID? <<FK>>
+}
+
+entity ProjectMembers {
+  * studentId : UUID <<FK>>
+  * projectId : UUID <<FK>>
+  --
+}
+
+entity StudentSkills {
+  * studentId : UUID <<FK>>
+  * skillId : UUID <<FK>>
+  --
+}
+
+entity FacultySkills {
+  * facultyId : UUID <<FK>>
+  * skillId : UUID <<FK>>
+  --
+}
+
+User ||--o{ Student : "is"
+User ||--o{ Faculty : "is"
+User ||--o{ Permission : "grants"
+User "role" -- "Role"
+Permission "role" -- "Role"
+
+Skill ||--o{ StudentSkills : "associated with"
+Student ||--o{ StudentSkills : "has skills"
+Skill ||--o{ FacultySkills : "associated with"
+Faculty ||--o{ FacultySkills : "has skills"
+
+Skill ||--o{ ProjectSkill : "associated with"
+Project ||--o{ ProjectSkill : "requires skills"
+
+Student ||--o{ ProjectMembers : "member of"
+Project ||--o{ ProjectMembers : "has members"
+
+Student ||--o{ AdvisorRequest : "belongs to"
+Project ||--o{ AdvisorRequest : "requests for"
+
+Project "status" -- "ProjectStatus"
+AdvisorRequest "status" -- "RequestStatus"
+GroupRequest "status" -- "RequestStatus"
+GroupRequest "type" -- "GroupRequestType"
+
+User ||--o{ GroupRequest : "belongs to"
+Project ||--o{ GroupRequest : "requests for"
+User ||--o{ InterestedIn : "marked interest"
+Project ||--o{ InterestedIn : "interested by"
+
+Faculty ||--o{ Project : "has advisor" 
+Faculty ||--o{ Project : "has co-advisor" 
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+skinparam titleFontSize 50
+skinparam titleFontName Courier
+
+title Zeinor: System Context
+
+AddElementTag("Zeinor Application", $bgColor="#B30738", $fontColor="white", $borderColor="black")
+AddElementTag("Google Auth", $bgColor="#9fa0ff", $fontColor="white", $borderColor="black")
+AddElementTag("Scholar Commons", $bgColor="#fc90af", $fontColor="white", $borderColor="black")
+AddElementTag("Student", $bgColor="#502688", $fontColor="white", $borderColor="black")
+AddElementTag("Advisor", $bgColor="#2e36aa", $fontColor="white", $borderColor="black")
+
+Person(student, "**Student**", "**Rising senior in SCU's School of Engineering**", $tags="Student")
+Person(advisor, "**Advisor**", "**Faculty advisor in SCU's School of Engineering**", $tags="Advisor")
+
+System(zwa, "**Zeinor Web Application**", "**A hub for rising seniors to form senior design teams (including project, team members, and advisors). Also used by faculty advisors to pitch project proposals and manage their advisees.**", $tags="Zeinor Application")
+System_Ext(auth, "**User Authentication**", "**Authenticates the user through Google Authentication to ensure that the user has an SCU domain email.**", $tags="Google Auth")
+System_Ext(api, "**Scholar Commons API**", "**SCU’s hub for theses and published research documents from SCU faculty and students.**", $tags="Scholar Commons")
+
+AddRelTag("Authentication", $lineColor="blue", $textColor="black")
+AddRelTag("API Call", $lineColor="red", $textColor="black")
+AddRelTag("Student and Zenior", $lineColor="purple", $textColor="black")
+AddRelTag("Advisor and Zenior", $lineColor="darkblue", $textColor="black")
+
+Rel_D(student, zwa, "Creates profile, proposes and views project pitches, views faculty directory, and joins a team", $tags="Student and Zenior")
+Rel_D(advisor, zwa, "Creates profile, pitches project proposals, and joins a SD team as an advisor", $tags="Advisor and Zenior")
+Rel_L(auth, zwa, "Application requests Google if user is verified", $tags="Authentication")
+Rel_R(zwa, api, "Sends requested data to Zeinor", $tags="API Call")
+Rel_L(zwa, auth, "Google Authentication returns the authorization code which confirms the user's identity", $tags="Authentication")
+Rel_R(api, zwa, "Request papers from API from topic", $tags="API Call")
+Rel_U(zwa, student, "Sends project pitches, team invites, and updates", $tags="Student and Zenior")
+Rel_U(zwa, advisor, "Sends updates on student groups, proposals status, and team interest", $tags="Advisor and Zenior")
+
+SHOW_LEGEND()
+@enduml

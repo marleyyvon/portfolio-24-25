@@ -1,0 +1,174 @@
+@startuml schema
+!theme vibrant
+title Zenior Database Schema
+
+' The schema meets the following normal forms:
+'
+' 1NF (First Normal Form):
+' - All attributes are atomic; there are no repeating groups or arrays within the columns.
+' - Each entity has a primary key, ensuring all rows are uniquely identifiable.
+' 
+' 2NF (Second Normal Form):
+' - The schema is already in 1NF.
+' - All non-key attributes depend entirely on the primary key of the table they belong to.
+' - For example, in the `User` table, attributes like `email`, `role`, and `profilePictureUrl` depend on `User.id`.
+' - In junction tables (e.g., `StudentSkills`), all non-key attributes depend on the composite primary key.
+'
+' 3NF (Third Normal Form):
+' - The schema is already in 2NF.
+' - There are no transitive dependencies; all attributes are directly dependent on the primary key.
+' - For instance, in the `Project` table, `title`, `description`, and `status` depend only on `Project.id`.
+' - No non-key attribute depends on another non-key attribute, ensuring the database is free from anomalies.
+
+entity User {
+  * id : UUID <<PK>>
+  --
+  email : String <<Unique>>
+  role : String <<student|advisor|admin|super_admin>>
+  isActive : Boolean <<Default(True)>>
+  profilePictureUrl : String?
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity Student {
+  * id : UUID <<PK>>
+  --
+  firstName : String
+  lastName : String
+  major : String
+  minor : String?
+  bio : Text
+  createdAt : DateTime
+  updatedAt : DateTime
+  userId : UUID <<FK>>
+}
+
+entity Faculty {
+  * id : UUID <<PK>>
+  --
+  firstName : String
+  lastName : String
+  department : String
+  bio : Text
+  createdAt : DateTime
+  updatedAt : DateTime
+  userId : UUID <<FK>>
+}
+
+entity Project {
+  * id : UUID <<PK>>
+  --
+  title : String
+  description : Text
+  academicYear : String
+  department : String
+  isInterdisciplinary : Boolean
+  status : String <<proposed|revise_requested|advisor_approved|final_approval>>
+  groupOpen : Boolean <<Default(True)>>
+  advisorId : UUID <<FK>>
+  coAdvisorId : UUID? <<FK>>
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity Skill {
+  * id : UUID <<PK>>
+  --
+  name : String <<Unique>>
+}
+
+entity Permission {
+  * id : UUID <<PK>>
+  --
+  name : String <<Unique>>
+  description : String
+  role : String <<student|advisor|admin|super_admin>>
+  userId : UUID? <<FK>>
+}
+
+entity AdvisorRequest {
+  * id : UUID <<PK>>
+  --
+  status : String
+  studentId : UUID <<FK>>
+  projectId : UUID <<FK>>
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity GroupRequest {
+  * id : UUID <<PK>>
+  --
+  status : String
+  type : String <<join|invite>>
+  studentId : UUID <<FK>>
+  projectId : UUID <<FK>>
+  createdAt : DateTime
+  updatedAt : DateTime
+}
+
+entity ProjectMembers {
+  * studentId : UUID <<FK>>
+  * projectId : UUID <<FK>>
+}
+
+entity StudentSkills {
+  * studentId : UUID <<FK>>
+  * skillId : UUID <<FK>>
+}
+
+entity FacultySkills {
+  * facultyId : UUID <<FK>>
+  * skillId : UUID <<FK>>
+}
+
+entity ResearchInterest {
+  * id : UUID <<PK>>
+  --
+  name : String <<Unique>>
+}
+
+entity ExpertiseArea {
+  * id : UUID <<PK>>
+  --
+  name : String <<Unique>>
+}
+
+entity FacultyResearchInterests {
+  * facultyId : UUID <<FK>>
+  * researchInterestId : UUID <<FK>>
+}
+
+entity FacultyExpertiseAreas {
+  * facultyId : UUID <<FK>>
+  * expertiseAreaId : UUID <<FK>>
+}
+
+
+User ||--o{ Student : "is"
+User ||--o{ Faculty : "is"
+
+Skill ||--o{ StudentSkills : "associated with"
+Student ||--o{ StudentSkills : "has skills"
+Skill ||--o{ FacultySkills : "associated with"
+Faculty ||--o{ FacultySkills : "has skills"
+
+Student ||--o{ ProjectMembers : "member of"
+Project ||--o{ ProjectMembers : "has members"
+
+Student ||--o{ AdvisorRequest : "belongs to"
+Project ||--o{ AdvisorRequest : "requests for"
+
+Student ||--o{ GroupRequest : "belongs to"
+Project ||--o{ GroupRequest : "requests for"
+
+Faculty ||--o{ Project : "has advisor" <<FK advisorId>>
+Faculty ||--o{ Project : "has co-advisor" <<FK coAdvisorId>>
+
+Faculty ||--o{ FacultyResearchInterests : "has interests"
+ResearchInterest ||--o{ FacultyResearchInterests : "linked with"
+
+Faculty ||--o{ FacultyExpertiseAreas : "has expertise"
+ExpertiseArea ||--o{ FacultyExpertiseAreas : "linked with"
+@enduml

@@ -1,0 +1,57 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+skinparam titleFontSize 50
+skinparam titleFontName Courier
+
+title Zeinor: Container Diagram
+
+AddContainerTag("WebApp", $bgColor="#2F4858", $fontColor="white", $borderColor="black")
+AddContainerTag("Frontend", $bgColor="#33658A", $fontColor="white", $borderColor="black")
+AddContainerTag("Database", $bgColor="#F26419", $fontColor="white", $borderColor="black")
+AddContainerTag("API", $bgColor="#86BBD8", $fontColor="white", $borderColor="black")
+AddContainerTag("ORM", $bgColor="#F6AE2D", $fontColor="white", $borderColor="black")
+
+AddBoundaryTag("Boundary", $bgColor="#B30738", $fontColor="white", $borderColor="black", $borderStyle="dashed", $borderThickness=5, $legendText="Zeinor Application")
+
+AddElementTag("Student", $bgColor="#502688", $fontColor="white", $borderColor="black")
+AddElementTag("Advisor", $bgColor="#2e36aa", $fontColor="white", $borderColor="black")
+AddElementTag("Google Auth", $bgColor="#9fa0ff", $fontColor="white", $borderColor="black")
+AddElementTag("Scholar Commons", $bgColor="#fc90af", $fontColor="white", $borderColor="black")
+
+AddRelTag("inside", $lineColor="white", $textColor="white")
+AddRelTag("external", $lineColor="black", $textColor="black", $legendText="External Interactions")
+
+Person(student, "Student", "Rising senior in SCU's School of Engineering", $tags="Student")
+Person(advisor, "Advisor", "Faculty advisor in SCU's School of Engineering", $tags="Advisor")
+System_Ext(auth, "User Authentication", "Authenticates the user through Google Authentication to ensure that the user has an SCU domain email.", $tags="Google Auth")
+System_Ext(api_ext, "Scholar Commons API", "SCU’s hub for theses and published research documents from SCU faculty and students.", $tags="Scholar Commons")
+
+Boundary(zwa, "Zeinor Web Application", $tags="Boundary") {
+    Container(web_app, "Zeinor Application", "next.js", "Generates routing, handles server-side logic, interacts with Prisma ORM and external APIs (OAuth, Scholar Commons)", $tags="WebApp")
+    Container(frontend, "Browser Page", "React, Tailwind", "Provides UI/UX, renders data dynamically via requests to Zeinor Web Application", $tags="Frontend")
+    Container(api, "Scholar Commons API Module", "next.js", "Fetches academic papers and research documents upon request based on search parameters", $tags="API")
+    Container(orm, "Database ORM", "Prisma", "Manages database interactions for user, team, and project data. Facilitates type-safe interactions between the Web Application and the database.", $tags="ORM")
+    ContainerDb(database, "Database", "Supabase (Postgres)", "A PostgreSQL-based database storing all persistent data for the application, such as user profiles, projects, and teams", $tags="Database")
+}
+
+Rel_L(frontend, web_app, "Requests data and renders dynamically", "HTTPS", $tags="inside")
+Rel_L(web_app, frontend, "Sends data for rendering", "HTTPS", $tags="inside")
+Rel_L(frontend, api, "Fetches search results for research documents", "HTTPS", $tags="inside")
+Rel_L(api, frontend, "Returns related papers and information based on search", "HTTPS", $tags="inside")
+Rel_D(web_app, orm, "Uses Object-Relational Mapping to interact with", "HTTPS", $tags="inside")
+Rel_L(orm, database, "Executes CRUD operations", "SQL", $tags="inside")
+Rel_L(database, orm, "Executes database queries", "SQL", $tags="inside")
+Rel_D(web_app, orm, "Responds with JSON objects of retrieved data and statuses of database operations requests", "HTTPS", $tags="inside")
+
+Rel_U(student, zwa, "Creates profile, proposes and views project pitches, views faculty directory, and joins a team", $tags="external")
+Rel_U(zwa, student, "Sends project pitches, team invites, and updates", $tags="external")
+Rel_U(advisor, zwa, "Creates profile, pitches project proposals, and joins a SD team as an advisor", $tags="external")
+Rel_U(zwa, advisor, "Sends updates on student groups, proposals status, and team interest", $tags="external")
+Rel_D(auth, zwa, "Application requests Google if user is verified", $tags="external")
+Rel(zwa, auth, "Google Authentication returns the authorization code which confirms the user's identity", $tags="external")
+Rel_R(zwa, api_ext, "Requests academic papers based on user input", $tags="external")
+Rel(api_ext, zwa, "Returns requested data to Zeinor", $tags="external")
+
+SHOW_LEGEND()
+@enduml
