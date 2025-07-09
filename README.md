@@ -8,7 +8,7 @@
 <p align="center">
   Curated relevant technical projects completed during the Academic Year 2024–2025.  
   <br/>
-  <em>Please expand each section below for details and source code.</em>
+  <em>Please expand each section below for more details and information.</em>
 </p>
 
 <p align="center">
